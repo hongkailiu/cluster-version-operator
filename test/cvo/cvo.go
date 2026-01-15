@@ -3,12 +3,9 @@ package cvo
 import (
 	"context"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/openshift/cluster-version-operator/test/oc"
 	ocapi "github.com/openshift/cluster-version-operator/test/oc/api"
@@ -35,20 +32,12 @@ var _ = Describe(`[Jira:"Cluster Version Operator"] cluster-version-operator-tes
 // CVO tests which need access the live cluster will be placed here
 var _ = Describe(`[Jira:"Cluster Version Operator"] cluster-version-operator`, func() {
 	const cvoNamespace = "openshift-cluster-version"
-	var (
-		restCfg    *rest.Config
-		kubeClient kubernetes.Interface
-	)
 
-	BeforeEach(func() {
-		var err error
-		// Respects KUBECONFIG env var
-		restCfg, err = GetRestConfig()
-		Expect(err).NotTo(HaveOccurred(), "Failed to load Kubernetes configuration. Please ensure KUBECONFIG environment variable is set.")
+	restCfg, err := GetRestConfig()
+	Expect(err).NotTo(HaveOccurred(), "Failed to load Kubernetes configuration. Please ensure KUBECONFIG environment variable is set.")
 
-		kubeClient, err = GetKubeClient(restCfg)
-		Expect(err).NotTo(HaveOccurred(), "Failed to create Kubernetes client")
-	})
+	kubeClient, err := GetKubeClient(restCfg)
+	Expect(err).NotTo(HaveOccurred(), "Failed to create Kubernetes client")
 
 	// Migrated from case NonHyperShiftHOST-Author:jiajliu-Low-46922-check runlevel and scc in cvo ns
 	// Refer to https://github.com/openshift/openshift-tests-private/blob/40374cf20946ff03c88712839a5626af2c88ab31/test/extended/ota/cvo/cvo.go#L1081
