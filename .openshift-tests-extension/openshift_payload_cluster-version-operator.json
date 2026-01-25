@@ -1,5 +1,25 @@
 [
   {
+    "name": "[Jira:\"Cluster Version Operator\"] cluster-version-operator works well on accept risks. Cluster Version Operator can store accepted risks",
+    "labels": {},
+    "resources": {
+      "isolation": {}
+    },
+    "source": "openshift:payload:cluster-version-operator",
+    "lifecycle": "blocking",
+    "environmentSelector": {}
+  },
+  {
+    "name": "[Jira:\"Cluster Version Operator\"] cluster-version-operator works well on accept risks. Cluster Version Operator should populate the fields about risks in status",
+    "labels": {},
+    "resources": {
+      "isolation": {}
+    },
+    "source": "openshift:payload:cluster-version-operator",
+    "lifecycle": "blocking",
+    "environmentSelector": {}
+  },
+  {
     "name": "[Jira:\"Cluster Version Operator\"] cluster-version-operator-tests should support passing tests",
     "labels": {},
     "resources": {
