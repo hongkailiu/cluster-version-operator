@@ -6,7 +6,6 @@
       "metadata": {
         "io.openshift.upgrades.graph.release.channels": "channel-head,risks-always,risks-matching,risks-nonmatching,simple,smoke-test",
         "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d5ef0",
-        "release.openshift.io/architecture": "amd64",
         "url": "https://access.redhat.com/errata/RHSA-2024:06200"
       }
     },
@@ -16,7 +15,6 @@
       "metadata": {
         "io.openshift.upgrades.graph.release.channels": "risks-always",
         "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d5ef1",
-        "release.openshift.io/architecture": "amd64",
         "url": "https://access.redhat.com/errata/RHSA-2024:06201"
       }
     },
@@ -26,7 +24,6 @@
       "metadata": {
         "io.openshift.upgrades.graph.release.channels": "risks-always",
         "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d62d8",
-        "release.openshift.io/architecture": "amd64",
         "url": "https://access.redhat.com/errata/RHSA-2024:06300"
       }
     }
