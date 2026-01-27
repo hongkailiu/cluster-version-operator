@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "version": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+      "payload": "quay.io/openshift-release-dev/ocp-release@sha256:00000000000000000000000000000000000000000000000000000000003d5ef0",
+      "metadata": {
+        "io.openshift.upgrades.graph.release.channels": "channel-head,risks-always,risks-matching,risks-nonmatching,simple,smoke-test",
+        "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d5ef0",
+        "url": "https://access.redhat.com/errata/RHSA-2024:06200"
+      }
+    },
+    {
+      "version": "4.22.1",
+      "payload": "quay.io/openshift-release-dev/ocp-release@sha256:00000000000000000000000000000000000000000000000000000000003d5ef1",
+      "metadata": {
+        "io.openshift.upgrades.graph.release.channels": "risks-always",
+        "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d5ef1",
+        "url": "https://access.redhat.com/errata/RHSA-2024:06201"
+      }
+    },
+    {
+      "version": "4.23.0",
+      "payload": "quay.io/openshift-release-dev/ocp-release@sha256:00000000000000000000000000000000000000000000000000000000003d62d8",
+      "metadata": {
+        "io.openshift.upgrades.graph.release.channels": "risks-always",
+        "io.openshift.upgrades.graph.release.manifestref": "sha256:00000000000000000000000000000000000000000000000000000000003d62d8",
+        "url": "https://access.redhat.com/errata/RHSA-2024:06300"
+      }
+    }
+  ],
+  "edges": [],
+  "conditionalEdges": [
+    {
+      "edges": [
+        {
+          "from": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+          "to": "4.22.1"
+        },
+        {
+          "from": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+          "to": "4.23.0"
+        }
+      ],
+      "risks": [
+        {
+          "url": "https://docs.openshift.com/synthetic-risk",
+          "name": "SyntheticRisk",
+          "message": "This is a synthetic risk that always applies for testing purposes",
+          "matchingRules": [
+            {
+              "type": "Always"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
