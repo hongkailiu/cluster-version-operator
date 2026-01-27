@@ -1,7 +1,7 @@
 {
   "nodes": [
     {
-      "version": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+      "version": "4.22.0-0-2026-01-27-085954-test-ci-ln-xycy2y2-latest",
       "payload": "quay.io/openshift-release-dev/ocp-release@sha256:00000000000000000000000000000000000000000000000000000000003d5ef0",
       "metadata": {
         "io.openshift.upgrades.graph.release.channels": "channel-head,risks-always,risks-matching,risks-nonmatching,simple,smoke-test",
@@ -33,11 +33,11 @@
     {
       "edges": [
         {
-          "from": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+          "from": "4.22.0-0-2026-01-27-085954-test-ci-ln-xycy2y2-latest",
           "to": "4.22.1"
         },
         {
-          "from": "4.22.0-0-2026-01-27-061251-test-ci-ln-07kwptk-latest",
+          "from": "4.22.0-0-2026-01-27-085954-test-ci-ln-xycy2y2-latest",
           "to": "4.23.0"
         }
       ],
