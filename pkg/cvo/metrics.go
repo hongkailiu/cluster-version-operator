@@ -262,39 +262,34 @@ func RunMetrics(runContext context.Context, shutdownContext context.Context, res
 	}()
 
 	clientAuth := tls.NoClientCert
-	var clientCA dynamiccertificates.CAContentProvider
-	var clientCAController *dynamiccertificates.ConfigMapCAController
+	// Create a dynamic CA controller to watch for client CA changes from a ConfigMap.
+	kubeClient, err := kubernetes.NewForConfig(restConfig)
+	if err != nil {
+		return fmt.Errorf("failed to create kube client: %w", err)
+	}
+
+	clientCAController, err := dynamiccertificates.NewDynamicCAFromConfigMapController(
+		"metrics-client-ca",
+		"kube-system",
+		"extension-apiserver-authentication",
+		"client-ca-file",
+		kubeClient)
+	if err != nil {
+		return fmt.Errorf("failed to create client CA controller: %w", err)
+	}
+
+	if err := clientCAController.RunOnce(metricsContext); err != nil {
+		return fmt.Errorf("failed to initialize client CA controller: %w", err)
+	}
+
+	// Start the client CA controller to begin watching the ConfigMap
+	resultChannelCount++
+	go func() {
+		clientCAController.Run(metricsContext, 1)
+		resultChannel <- asyncResult{name: "client CA from ConfigMap controller"}
+	}()
+
 	if !options.DisableAuthentication {
-		// Create a dynamic CA controller to watch for client CA changes from a ConfigMap.
-		kubeClient, err := kubernetes.NewForConfig(restConfig)
-		if err != nil {
-			return fmt.Errorf("failed to create kube client: %w", err)
-		}
-
-		clientCAController, err = dynamiccertificates.NewDynamicCAFromConfigMapController(
-			"metrics-client-ca",
-			"kube-system",
-			"extension-apiserver-authentication",
-			"client-ca-file",
-			kubeClient)
-		if err != nil {
-			return fmt.Errorf("failed to create client CA controller: %w", err)
-		}
-
-		if err := clientCAController.RunOnce(metricsContext); err != nil {
-			return fmt.Errorf("failed to initialize client CA controller: %w", err)
-		}
-
-		// Start the client CA controller to begin watching the ConfigMap
-		resultChannelCount++
-		go func() {
-			clientCAController.Run(metricsContext, 1)
-			resultChannel <- asyncResult{name: "client CA from ConfigMap controller"}
-		}()
-
-		// Assign to interface variable to ensure proper nil handling
-		clientCA = clientCAController
-
 		// Enforce mTLS
 		clientAuth = tls.RequireAndVerifyClientCert
 	}
@@ -311,7 +306,7 @@ func RunMetrics(runContext context.Context, shutdownContext context.Context, res
 	baseTlSConfig := crypto.SecureTLSConfig(&tls.Config{ClientAuth: clientAuth})
 	servingCertController := dynamiccertificates.NewDynamicServingCertificateController(
 		baseTlSConfig,
-		clientCA,
+		clientCAController,
 		servingContentController,
 		nil,
 		record.NewEventRecorderAdapter(
